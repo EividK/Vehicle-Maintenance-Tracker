@@ -2,6 +2,7 @@ package com.example.vehiclehealth.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -45,24 +46,62 @@ import com.example.vehiclehealth.services.VehicleService
 import com.example.vehiclehealth.services.VinDecoderService
 import com.example.vehiclehealth.ui.theme.VehicleHealthTheme
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
-
-class MyVehiclesActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            VehicleHealthTheme {
-            }
-        }
-    }
-}
 
 @Composable
 fun MyVehiclesScreen(navController: NavController, vehicleService: VehicleService) {
+    val firebaseAuth = FirebaseAuth.getInstance()
+    val firestore = FirebaseFirestore.getInstance()
+    val userId = firebaseAuth.currentUser?.uid ?: "defaultUserId"
+
     val vehicles = remember { mutableStateOf<List<Vehicle>>(emptyList()) }
     val coroutineScope = rememberCoroutineScope()
+    val context = LocalContext.current
 
     var showVehicleDialog by remember { mutableStateOf(false) }
+
+    // Function to check if a vehicle with the given VIN already exists
+    fun vehicleExists(vin: String, onResult: (Boolean) -> Unit) {
+        firestore.collection("users")
+            .document(userId)
+            .collection("vehicles")
+            .whereEqualTo("vin", vin)
+            .get()
+            .addOnSuccessListener { snapshot ->
+                onResult(!snapshot.isEmpty)
+            }
+            .addOnFailureListener {
+                // In case of error, assume it does not exist (or handle accordingly)
+                onResult(false)
+            }
+    }
+    // Function to add the vehicle if it doesn't already exist
+    fun addVehicleToDatabase(vehicle: Vehicle) {
+        vehicleExists(vehicle.vin) { exists ->
+            if (exists) {
+                Toast.makeText(context, "Vehicle with VIN ${vehicle.vin} already exists", Toast.LENGTH_SHORT).show()
+            } else {
+                firestore.collection("users")
+                    .document(userId)
+                    .collection("vehicles")
+                    .add(vehicle)
+                    .addOnSuccessListener {
+                        Toast.makeText(context, "Vehicle added successfully", Toast.LENGTH_SHORT).show()
+                        // Refresh list of vehicles by updating vehicles.value.
+                        coroutineScope.launch {
+                            vehicles.value = vehicleService.getUserVehicles()
+                        }
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(context, "Error adding vehicle: ${e.message}", Toast.LENGTH_SHORT).show()
+                        Log.e("MyVehiclesScreen", "Error adding vehicle", e)
+                    }
+            }
+        }
+    }
+
+    //--------- Screen UI Display
 
     // Fetch vehicles when screen loads
     LaunchedEffect(Unit) {
@@ -71,20 +110,21 @@ fun MyVehiclesScreen(navController: NavController, vehicleService: VehicleServic
         }
     }
 
+    Column (modifier = Modifier.fillMaxSize()) {
     MyVehiclesTopBar(
         topBarImg = painterResource(id = R.drawable.my_vehicles_top_bar_settings),
-        topBarText = "My Vehicles"
+        topBarText = "My Vehicles",
+                modifier = Modifier.fillMaxWidth()
     )
+    }
 
     Box(
         modifier = Modifier
             .fillMaxSize() // Ensures it takes up the full screen
             .background(Color(0xFF1E1D2B)), // Screen background color
     ) {
-        MainNavigationBar(navController = navController, onVinClick = {
-            showVehicleDialog = true
-        })
 
+        // Main dashboard displaying users Vehicles (if any added).
         if (vehicles.value.isEmpty()) {
             NoVehicleAdded(
                 noVehicleText = "You have no vehicles added",
@@ -95,21 +135,24 @@ fun MyVehiclesScreen(navController: NavController, vehicleService: VehicleServic
         } else {
             VehicleList(vehicles.value)
         }
+
+        // Bottom Nav bar
+        MainNavigationBar(navController = navController, onVinClick = {
+            showVehicleDialog = true
+        })
     }
 
-    // Show the dialog when the state is true.
     if (showVehicleDialog) {
         VehicleInputDialog(
             onDismiss = { showVehicleDialog = false },
             onAddVehicle = { vehicle ->
-                // Handle the added vehicle, e.g. store it in Firestore or update your UI.
-                // Then hide the dialog.
+                addVehicleToDatabase(vehicle)
                 showVehicleDialog = false
             }
         )
-    } //1HGCM82633A004352
-
+    }
 }
+
 
 @Composable
 fun VehicleList(vehicles: List<Vehicle>) {

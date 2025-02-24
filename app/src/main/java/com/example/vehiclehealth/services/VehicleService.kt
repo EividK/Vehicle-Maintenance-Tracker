@@ -29,7 +29,11 @@ class VehicleService {
                     year = doc.getLong("year")?.toInt() ?: 0,
                     vin = doc.getString("vin") ?: "",
                     registrationNumber = doc.getString("registrationNumber") ?: "",
-                    mileage = doc.getLong("mileage")?.toInt() ?: 0
+                    mileage = doc.getLong("mileage")?.toInt() ?: 0,
+                    engineType = "Unknown",
+                    bodyStyle = "Unknown",
+                    trimLevel = "Unknown",
+                    transmissionType = "Unknown"
                 )
             }
         } catch (e: Exception) {

@@ -72,6 +72,11 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.firebase.database.ktx)
+    implementation(libs.vision.common)
+    implementation(libs.play.services.mlkit.text.recognition.common)
+    implementation(libs.play.services.mlkit.text.recognition)
+    implementation(libs.androidx.camera.view)
+    implementation(libs.androidx.camera.lifecycle)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -90,4 +95,5 @@ dependencies {
 
     implementation("io.coil-kt:coil-compose:2.3.0")
     implementation("com.google.firebase:firebase-storage-ktx")
+    implementation("com.google.mlkit:text-recognition:16.0.0")
 }

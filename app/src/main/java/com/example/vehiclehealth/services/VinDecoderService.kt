@@ -6,6 +6,7 @@ import android.os.IBinder
 import android.util.Log
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.vehiclehealth.models.Vehicle
+import com.example.vehiclehealth.utils.isValidVin
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.firestore.FirebaseFirestore
@@ -51,6 +52,26 @@ class VinDecoderService : Service() {
      * 4. Broadcasting the complete Vehicle object.
      */
     private fun decodeVinUsingDatabase(vin: String) {
+        // Validate the VIN first.
+        if (!isValidVin(vin)) {
+            Log.e("VinDecoderService", "Invalid VIN: check digit does not match")
+            val errorVehicle = Vehicle(
+                vin = vin,
+                brand = "Invalid VIN",
+                model = "Invalid VIN",
+                year = 0,
+                mileage = 0,
+                registrationNumber = "",
+                engineType = "Unknown",
+                bodyStyle = "Unknown",
+                trimLevel = "Unknown",
+                transmissionType = "Unknown"
+            )
+            broadcastDecodedData(errorVehicle)
+            stopSelf()
+            return
+        }
+
         val wmi = vin.substring(0, 3)
         val yearCode = vin[9]
         val modelCode = vin.substring(3, 8)
