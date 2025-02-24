@@ -1,0 +1,435 @@
+{
+  "name": "bottom_navigation_bar",
+  "version": 33,
+  "source-key": {
+    "type": "figma",
+    "file": "XWWjSEQRQtS5uhionoeU6p",
+    "node": "92:43",
+    "version": "2181632410068644906",
+    "component-id": "c77643a96608b13d5ba6a6b8779e3606dde9a509"
+  },
+  "default": "Bottom Navigation Bar",
+  "design": {
+    "atoms": [
+      {
+        "type": "group",
+        "id": "top_level",
+        "root": "true"
+      },
+      {
+        "type": "vector",
+        "id": "Bottom Nav Bar"
+      },
+      {
+        "type": "group",
+        "id": "MyVehicles"
+      },
+      {
+        "type": "group",
+        "id": "Schedule"
+      },
+      {
+        "type": "group",
+        "id": "Notifications"
+      },
+      {
+        "type": "group",
+        "id": "Maps"
+      },
+      {
+        "type": "group",
+        "id": "Add"
+      },
+      {
+        "type": "group",
+        "id": "top_level_synth"
+      },
+      {
+        "type": "image",
+        "id": "My Vehicles Icon Button"
+      },
+      {
+        "type": "image",
+        "id": "Schedule1"
+      },
+      {
+        "type": "image",
+        "id": "Notifications Icon"
+      },
+      {
+        "type": "image",
+        "id": "Nearby Centres Icon Button"
+      },
+      {
+        "type": "image",
+        "id": "Add Icon"
+      }
+    ],
+    "modes": {
+      "Bottom Navigation Bar": {
+        "rules": [
+          {
+            "id": "top_level",
+            "is-structured": false,
+            "children": [
+              "Bottom Nav Bar",
+              "MyVehicles",
+              "Schedule",
+              "Notifications",
+              "Maps",
+              "Add",
+              "top_level_synth"
+            ],
+            "clip-content": false
+          },
+          {
+            "id": "Bottom Nav Bar",
+            "border-radius": 28.0,
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": 0.0
+              },
+              "vertical": {
+                "attachment": "end",
+                "offset": 0.0
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 361.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 70.0
+              }
+            },
+            "vector-content": "bottom_nav_bar.svg"
+          },
+          {
+            "id": "MyVehicles",
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": -135.5
+              },
+              "vertical": {
+                "attachment": "end",
+                "offset": -20.0
+              }
+            },
+            "tap-handler": "$navMyVehiclesBtn",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 30.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 30.0
+              }
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "cross-axis-align": "end",
+            "children": [
+              "My Vehicles Icon Button"
+            ],
+            "item-spacing": 10.0,
+            "clip-content": false
+          },
+          {
+            "id": "Schedule",
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": 85.5
+              },
+              "vertical": {
+                "attachment": "end",
+                "offset": -20.0
+              }
+            },
+            "tap-handler": "$navScheduleBtn",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 30.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 30.0
+              }
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "cross-axis-align": "end",
+            "children": [
+              "Schedule1"
+            ],
+            "item-spacing": 10.0,
+            "clip-content": false
+          },
+          {
+            "id": "Notifications",
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": 140.5
+              },
+              "vertical": {
+                "attachment": "end",
+                "offset": -20.0
+              }
+            },
+            "tap-handler": "$navNotificationsBtn",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 30.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 30.0
+              }
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "cross-axis-align": "end",
+            "children": [
+              "Notifications Icon"
+            ],
+            "item-spacing": 10.0,
+            "clip-content": false
+          },
+          {
+            "id": "Maps",
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": -74.5
+              },
+              "vertical": {
+                "attachment": "end",
+                "offset": -20.0
+              }
+            },
+            "tap-handler": "$navMapsBtn",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 30.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 30.0
+              }
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "cross-axis-align": "end",
+            "children": [
+              "Nearby Centres Icon Button"
+            ],
+            "item-spacing": 10.0,
+            "clip-content": false
+          },
+          {
+            "id": "Add",
+            "padding": 22.0,
+            "border-radius": 32.0,
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": 5.5
+              },
+              "vertical": {
+                "attachment": "end",
+                "offset": -25.0
+              }
+            },
+            "tap-handler": "$navAddBtn",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 64.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 64.0
+              }
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "cross-axis-align": "end",
+            "children": [
+              "Add Icon"
+            ],
+            "item-spacing": 10.0,
+            "background-color": {
+              "alpha": 1.0,
+              "hue": 211.68,
+              "saturation": 0.9960159362549801,
+              "value": 0.984313725490196
+            },
+            "clip-content": false
+          },
+          {
+            "id": "top_level_synth",
+            "opacity": 100.0,
+            "main-axis-align": "end",
+            "clip-content": false
+          },
+          {
+            "id": "My Vehicles Icon Button",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 30.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 30.0
+              }
+            },
+            "image-content": "$navMyVehiclesImg",
+            "scale": "cover"
+          },
+          {
+            "id": "Schedule1",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 30.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 30.0
+              }
+            },
+            "image-content": "$navScheduleImg",
+            "scale": "cover"
+          },
+          {
+            "id": "Notifications Icon",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 30.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 30.0
+              }
+            },
+            "image-content": "$navNotificationsImg",
+            "scale": "cover"
+          },
+          {
+            "id": "Nearby Centres Icon Button",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 30.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 30.0
+              }
+            },
+            "image-content": "$navMapsImg",
+            "scale": "cover"
+          },
+          {
+            "id": "Add Icon",
+            "opacity": 0.800000011920929,
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 20.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 20.0
+              }
+            },
+            "image-content": "$navAddImg",
+            "scale": "cover"
+          }
+        ]
+      }
+    }
+  },
+  "parameters": {
+    "navMyVehiclesBtn": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "navScheduleBtn": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "navNotificationsBtn": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "navMapsBtn": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "navAddBtn": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "navMyVehiclesImg": {
+      "data-type": "image",
+      "required": false,
+      "description": ""
+    },
+    "navScheduleImg": {
+      "data-type": "image",
+      "required": false,
+      "description": ""
+    },
+    "navNotificationsImg": {
+      "data-type": "image",
+      "required": false,
+      "description": ""
+    },
+    "navMapsImg": {
+      "data-type": "image",
+      "required": false,
+      "description": ""
+    },
+    "navAddImg": {
+      "data-type": "image",
+      "required": false,
+      "description": ""
+    }
+  },
+  "previews": [
+    {
+      "design": "Bottom Navigation Bar",
+      "size": {
+        "width": 361.0,
+        "height": 87.0
+      },
+      "parameters": {
+        "navMyVehiclesImg": "my_vehicles_icon_button.png",
+        "navScheduleImg": "schedule.png",
+        "navNotificationsImg": "notifications_icon.png",
+        "navMapsImg": "nearby_centres_icon_button.png",
+        "navAddImg": "add_icon.png"
+      }
+    }
+  ],
+  "adin-component-search-paths": [],
+  "image-search-paths": [],
+  "vector-search-paths": []
+}

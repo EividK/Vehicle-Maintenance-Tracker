@@ -1,0 +1,257 @@
+{
+  "name": "no_vehicle_added",
+  "version": 33,
+  "source-key": {
+    "type": "figma",
+    "file": "WCS75yacdGKAIMXL9S0Cit",
+    "node": "112:3",
+    "version": "2181224460110263721",
+    "component-id": "a3d7bea01fbcf126255f10e8e44308e76bf44403"
+  },
+  "default": "No Vehicle Added",
+  "design": {
+    "atoms": [
+      {
+        "type": "group",
+        "id": "top_level",
+        "root": "true"
+      },
+      {
+        "type": "group",
+        "id": "No Vehicles Added Text"
+      },
+      {
+        "type": "group",
+        "id": "Add Vehicle Button"
+      },
+      {
+        "type": "text",
+        "id": "No Vehicles Text"
+      },
+      {
+        "type": "image",
+        "id": "Car Picture"
+      },
+      {
+        "type": "text",
+        "id": "Get Started Text"
+      },
+      {
+        "type": "text",
+        "id": "Add Vehicle"
+      }
+    ],
+    "modes": {
+      "No Vehicle Added": {
+        "rules": [
+          {
+            "id": "top_level",
+            "children": [
+              "No Vehicles Added Text",
+              "Add Vehicle Button"
+            ],
+            "item-spacing": 45.0,
+            "clip-content": false
+          },
+          {
+            "id": "No Vehicles Added Text",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 286.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 307.0
+              }
+            },
+            "is-structured": false,
+            "children": [
+              "No Vehicles Text",
+              "Car Picture",
+              "Get Started Text"
+            ],
+            "clip-content": false
+          },
+          {
+            "id": "Add Vehicle Button",
+            "padding": {
+              "left": 24.0,
+              "top": 13.0,
+              "right": 24.0,
+              "bottom": 13.0
+            },
+            "border-radius": 1000.0,
+            "tap-handler": "$addVehiclebtn",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 150.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 44.0
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "Add Vehicle"
+            ],
+            "item-spacing": 10.0,
+            "background-color": {
+              "alpha": 1.0,
+              "hue": 211.68,
+              "saturation": 0.9960159362549801,
+              "value": 0.984313725490196
+            },
+            "clip-content": false
+          },
+          {
+            "id": "No Vehicles Text",
+            "margin": {
+              "left": 37.0,
+              "top": 186.0,
+              "right": 38.0,
+              "bottom": 73.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            },
+            "font-weight": 800.0,
+            "color": {
+              "alpha": 1.0,
+              "hue": 245.45454545454544,
+              "saturation": 0.30136986301369856,
+              "value": 0.28627450980392155
+            },
+            "text-content": "$noVehicleText",
+            "overflow": "visible",
+            "text-align-vertical": "center",
+            "text-size": 20.0,
+            "line-height": 1.2102272033691406,
+            "typeface": "Inter"
+          },
+          {
+            "id": "Car Picture",
+            "margin": {
+              "bottom": 51.0
+            },
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": 0.0
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": 0.0
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 256.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            },
+            "image-content": "$noVehicleImg",
+            "scale": "cover"
+          },
+          {
+            "id": "Get Started Text",
+            "margin": {
+              "top": 253.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            },
+            "font-weight": 300.0,
+            "color": {
+              "alpha": 0.34901960784313724,
+              "hue": 0.0,
+              "saturation": 0.0,
+              "value": 1.0
+            },
+            "text-content": "$noVehicleDescText",
+            "overflow": "visible",
+            "text-align-vertical": "center",
+            "text-size": 15.0,
+            "line-height": 1.2102272033691406,
+            "typeface": "Inter"
+          },
+          {
+            "id": "Add Vehicle",
+            "font-weight": 700.0,
+            "color": {
+              "alpha": 1.0,
+              "hue": 0.0,
+              "saturation": 0.0,
+              "value": 1.0
+            },
+            "text-content": "Add Vehicle",
+            "overflow": "visible",
+            "text-align-vertical": "center",
+            "text-size": 15.0,
+            "line-height": 1.2102272033691406,
+            "typeface": "Inter"
+          }
+        ]
+      }
+    }
+  },
+  "parameters": {
+    "addVehiclebtn": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "noVehicleText": {
+      "data-type": "text",
+      "required": false,
+      "description": ""
+    },
+    "noVehicleImg": {
+      "data-type": "image",
+      "required": false,
+      "description": ""
+    },
+    "noVehicleDescText": {
+      "data-type": "text",
+      "required": false,
+      "description": ""
+    }
+  },
+  "previews": [
+    {
+      "design": "No Vehicle Added",
+      "size": {
+        "width": 286.0,
+        "height": 396.0
+      },
+      "parameters": {
+        "noVehicleText": "You have no vehicles  added",
+        "noVehicleImg": "car_picture.png",
+        "noVehicleDescText": "Get started by adding a vehicle to begin \ntracking its performance and  maintenance."
+      }
+    }
+  ],
+  "adin-component-search-paths": [],
+  "image-search-paths": [],
+  "vector-search-paths": []
+}

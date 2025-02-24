@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "684617172757",
+    "project_id": "vehiclehealth-38472",
+    "storage_bucket": "vehiclehealth-38472.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:684617172757:android:cf56abd802e318789dcb1c",
+        "android_client_info": {
+          "package_name": "com.example.vehiclehealth"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiGvGX81ZJUPG_HOXHrW9JnX_xaEhwIK0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

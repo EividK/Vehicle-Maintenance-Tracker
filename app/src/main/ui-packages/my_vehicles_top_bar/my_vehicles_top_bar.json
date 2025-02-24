@@ -1,0 +1,125 @@
+{
+  "name": "my_vehicles_top_bar",
+  "version": 33,
+  "source-key": {
+    "type": "figma",
+    "file": "dwLLCGFgJV4sdubvMEBZng",
+    "node": "124:2",
+    "version": "2181706711938205332",
+    "component-id": "303a9c7769cda7a1fbf47db3927fc3a94b4236c5"
+  },
+  "default": "My Vehicles Top Bar",
+  "design": {
+    "atoms": [
+      {
+        "type": "group",
+        "id": "top_level",
+        "root": "true"
+      },
+      {
+        "type": "text",
+        "id": "My Vehicles"
+      },
+      {
+        "type": "image",
+        "id": "Settings"
+      }
+    ],
+    "modes": {
+      "My Vehicles Top Bar": {
+        "rules": [
+          {
+            "id": "top_level",
+            "is-structured": false,
+            "children": [
+              "My Vehicles",
+              "Settings"
+            ],
+            "clip-content": false
+          },
+          {
+            "id": "My Vehicles",
+            "margin": {
+              "left": 99.0
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            },
+            "font-weight": 800.0,
+            "color": {
+              "alpha": 0.6784313725490196,
+              "hue": 0.0,
+              "saturation": 0.0,
+              "value": 1.0
+            },
+            "text-content": "$topBarText",
+            "overflow": "visible",
+            "text-align-vertical": "center",
+            "text-size": 24.0,
+            "line-height": 1.2102272510528564,
+            "typeface": "Inter"
+          },
+          {
+            "id": "Settings",
+            "margin": {
+              "right": 215.0
+            },
+            "tap-handler": "$topBarSettingsBtn",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": 1.0
+              }
+            },
+            "image-content": "$topBarImg",
+            "scale": "cover"
+          }
+        ]
+      }
+    }
+  },
+  "parameters": {
+    "topBarText": {
+      "data-type": "text",
+      "required": false,
+      "description": ""
+    },
+    "topBarImg": {
+      "data-type": "image",
+      "required": false,
+      "description": ""
+    },
+    "topBarSettingsBtn": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    }
+  },
+  "previews": [
+    {
+      "design": "My Vehicles Top Bar",
+      "size": {
+        "width": 244.0,
+        "height": 29.0
+      },
+      "parameters": {
+        "topBarText": "My Vehicles",
+        "topBarImg": "settings.png"
+      }
+    }
+  ],
+  "adin-component-search-paths": [],
+  "image-search-paths": [],
+  "vector-search-paths": []
+}
