@@ -23,14 +23,20 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.example.vehiclehealth.components.MileageTextField
+import com.example.vehiclehealth.components.RegistrationNumberTextField
 import com.example.vehiclehealth.models.Vehicle
 import com.example.vehiclehealth.services.VinDecoderService
 import com.example.vehiclehealth.utils.isValidVin
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+import java.text.NumberFormat
+import java.util.Locale
 
 @Composable
 fun VehicleInputDialog(
@@ -54,6 +60,9 @@ fun VehicleInputDialog(
     var decodingInProgress by remember { mutableStateOf(false) }
     var decodeFailed by remember { mutableStateOf(false) }
 
+    var mileageState by remember { mutableStateOf(TextFieldValue("")) }
+    var regNumberState by remember { mutableStateOf(TextFieldValue("")) }
+
     // Start a timeout effect when decoding begins.
     LaunchedEffect(decodingInProgress) {
         if (decodingInProgress) {
@@ -67,13 +76,19 @@ fun VehicleInputDialog(
         }
     }
 
-    fun adjustBrightnessAndContrast(bitmap: Bitmap, brightnessFactor: Float, contrast: Float): Bitmap {
-        val cm = ColorMatrix(floatArrayOf(
-            contrast, 0f,       0f,       0f, brightnessFactor * 50, // Increase brightness offset
-            0f,       contrast, 0f,       0f, brightnessFactor * 50,
-            0f,       0f,       contrast, 0f, brightnessFactor * 50,
-            0f,       0f,       0f,       1f, 0f
-        ))
+    fun adjustBrightnessAndContrast(
+        bitmap: Bitmap,
+        brightnessFactor: Float,
+        contrast: Float
+    ): Bitmap {
+        val cm = ColorMatrix(
+            floatArrayOf(
+                contrast, 0f, 0f, 0f, brightnessFactor * 50, // Increase brightness offset
+                0f, contrast, 0f, 0f, brightnessFactor * 50,
+                0f, 0f, contrast, 0f, brightnessFactor * 50,
+                0f, 0f, 0f, 1f, 0f
+            )
+        )
         val ret = Bitmap.createBitmap(bitmap.width, bitmap.height, bitmap.config)
         val canvas = Canvas(ret)
         val paint = Paint()
@@ -91,7 +106,10 @@ fun VehicleInputDialog(
             Log.e("VehicleInputDialog", "Camera capture cancelled or failed")
             Toast.makeText(context, "Camera capture failed", Toast.LENGTH_SHORT).show()
         } else {
-            Log.d("VehicleInputDialog", "Bitmap captured: width=${bitmap.width}, height=${bitmap.height}")
+            Log.d(
+                "VehicleInputDialog",
+                "Bitmap captured: width=${bitmap.width}, height=${bitmap.height}"
+            )
             // Process the captured image using ML Kit Text Recognition.
             try {
                 val inputImage = InputImage.fromBitmap(bitmap, 0)
@@ -135,13 +153,18 @@ fun VehicleInputDialog(
                             // Auto-trigger decoding service.
                             decodingInProgress = true
                             decodeFailed = false
-                            val serviceIntent = Intent(context, VinDecoderService::class.java).apply {
-                                putExtra("vin", candidate)
-                            }
+                            val serviceIntent =
+                                Intent(context, VinDecoderService::class.java).apply {
+                                    putExtra("vin", candidate)
+                                }
                             context.startService(serviceIntent)
                         } else {
                             Log.e("VehicleInputDialog", "No valid VIN found in captured image")
-                            Toast.makeText(context, "No valid VIN found. Please try again.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                context,
+                                "No valid VIN found. Please try again.",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
                     .addOnFailureListener { e ->
@@ -170,7 +193,10 @@ fun VehicleInputDialog(
                     decodingInProgress = false
                     // Reset failure state if we received a response.
                     decodeFailed = false
-                    Log.d("VehicleInputDialog", "Received decoded: brand=$decodedBrand, model=$decodedModel, year=$decodedYear, engine=$decodedEngineType, bodyStyle=$decodedBodyStyle, trim=$decodedTrimLevel, transmission=$decodedTransmissionType")
+                    Log.d(
+                        "VehicleInputDialog",
+                        "Received decoded: brand=$decodedBrand, model=$decodedModel, year=$decodedYear, engine=$decodedEngineType, bodyStyle=$decodedBodyStyle, trim=$decodedTrimLevel, transmission=$decodedTransmissionType"
+                    )
                 }
             }
         }
@@ -204,14 +230,16 @@ fun VehicleInputDialog(
                     Spacer(modifier = Modifier.width(8.dp))
                     Button(onClick = {
                         if (vinValue.length != 17) {
-                            Toast.makeText(context, "VIN must be 17 characters", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "VIN must be 17 characters", Toast.LENGTH_SHORT)
+                                .show()
                         } else {
                             decodingInProgress = true
                             decodeFailed = false
                             // Start the service to decode the VIN using the database.
-                            val serviceIntent = Intent(context, VinDecoderService::class.java).apply {
-                                putExtra("vin", vinValue)
-                            }
+                            val serviceIntent =
+                                Intent(context, VinDecoderService::class.java).apply {
+                                    putExtra("vin", vinValue)
+                                }
                             context.startService(serviceIntent)
                         }
                     }) {
@@ -237,7 +265,10 @@ fun VehicleInputDialog(
                 }
                 if (decodeFailed) {
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text("Vehicle not found. Please try again.", color = androidx.compose.ui.graphics.Color.Red)
+                    Text(
+                        "Vehicle not found. Please try again.",
+                        color = androidx.compose.ui.graphics.Color.Red
+                    )
                 }
                 // When decoded data is available, display it and show additional input fields.
                 if (decodedBrand != null && decodedModel != null && decodedYear != null && decodedYear != 0) {
@@ -250,18 +281,17 @@ fun VehicleInputDialog(
                     Text("Trim Level: $decodedTrimLevel")
                     Text("Transmission: $decodedTransmissionType")
                     Spacer(modifier = Modifier.height(16.dp))
-                    TextField(
-                        value = mileage,
-                        onValueChange = { mileage = it },
-                        label = { Text("Mileage") },
-                        modifier = Modifier.fillMaxWidth()
+
+                    MileageTextField(
+                        value = mileageState,
+                        onValueChange = { mileageState = it }
                     )
+
                     Spacer(modifier = Modifier.height(8.dp))
-                    TextField(
-                        value = registrationNumber,
-                        onValueChange = { registrationNumber = it },
-                        label = { Text("Registration Number") },
-                        modifier = Modifier.fillMaxWidth()
+
+                    RegistrationNumberTextField(
+                        value = regNumberState,
+                        onValueChange = { regNumberState = it }
                     )
                 }
             }
@@ -270,13 +300,13 @@ fun VehicleInputDialog(
             if (decodedBrand != null && decodedModel != null && decodedYear != null && decodedYear != 0) {
                 Button(onClick = {
                     val vehicle = Vehicle(
-                            //id = "",
+                        //id = "",
                         vin = vinValue,
                         brand = decodedBrand!!,
                         model = decodedModel!!,
                         year = decodedYear!!,
-                        mileage = mileage.toIntOrNull() ?: 0,
-                        registrationNumber = registrationNumber,
+                        mileage = mileageState.text.replace(",", "").toIntOrNull() ?: 0,
+                        registrationNumber = regNumberState.text,
                         engineType = "Unknown",
                         bodyStyle = "Unknown",
                         trimLevel = "Unknown",

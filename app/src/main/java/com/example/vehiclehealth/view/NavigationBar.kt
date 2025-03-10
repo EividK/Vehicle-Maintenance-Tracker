@@ -40,6 +40,7 @@ fun MainNavigationBar(navController: NavController, onVinClick: () -> Unit) {
                 navNotificationsBtn = { navController.navigate("#") },
 
             modifier = Modifier
+                .padding(horizontal = 20.dp)
                 .fillMaxWidth()
                 .padding(bottom = 40.dp)
                 .wrapContentHeight(Alignment.CenterVertically)

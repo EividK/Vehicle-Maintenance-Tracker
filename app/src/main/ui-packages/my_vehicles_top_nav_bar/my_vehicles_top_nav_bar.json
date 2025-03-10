@@ -1,14 +1,14 @@
 {
-  "name": "my_vehicles_top_bar",
+  "name": "my_vehicles_top_nav_bar",
   "version": 33,
   "source-key": {
     "type": "figma",
-    "file": "dwLLCGFgJV4sdubvMEBZng",
-    "node": "124:2",
-    "version": "2181708494882209088",
-    "component-id": "303a9c7769cda7a1fbf47db3927fc3a94b4236c5"
+    "file": "hvYlorDa7wnwy62mPh8KbC",
+    "node": "2008:10",
+    "version": "2191369624920353750",
+    "component-id": "c6d287b2450de6711760389e9b7ff9e7a87a1fab"
   },
-  "default": "My Vehicles Top Bar",
+  "default": "My Vehicles TopNavBar",
   "design": {
     "atoms": [
       {
@@ -17,44 +17,58 @@
         "root": "true"
       },
       {
-        "type": "text",
-        "id": "My Vehicles"
-      },
-      {
         "type": "image",
         "id": "Settings"
+      },
+      {
+        "type": "text",
+        "id": "My Vehicles"
       }
     ],
     "modes": {
-      "My Vehicles Top Bar": {
+      "My Vehicles TopNavBar": {
         "rules": [
           {
             "id": "top_level",
-            "is-structured": false,
-            "children": [
-              "My Vehicles",
-              "Settings"
-            ],
-            "clip-content": false
-          },
-          {
-            "id": "My Vehicles",
-            "margin": {
-              "left": 99.0
-            },
             "size-constraints": {
               "width-constraints": {
-                "sizing-mode": "proportional",
-                "value": 1.0
+                "sizing-mode": "shrink"
               },
               "height-constraints": {
                 "sizing-mode": "proportional",
                 "value": 1.0
               }
             },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "children": [
+              "Settings",
+              "My Vehicles"
+            ],
+            "item-spacing": 70.0,
+            "clip-content": false
+          },
+          {
+            "id": "Settings",
+            "tap-handler": "$topBarSettingsBtn",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": 29.0
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": 29.0
+              }
+            },
+            "image-content": "$topBarImg",
+            "scale": "cover"
+          },
+          {
+            "id": "My Vehicles",
             "font-weight": 800.0,
             "color": {
-              "alpha": 0.6784313725490196,
+              "alpha": 0.6745098039215687,
               "hue": 0.0,
               "saturation": 0.0,
               "value": 1.0
@@ -65,36 +79,12 @@
             "text-size": 24.0,
             "line-height": 1.2102272510528564,
             "typeface": "Inter"
-          },
-          {
-            "id": "Settings",
-            "margin": {
-              "right": 215.0
-            },
-            "tap-handler": "$topBarSettingsBtn",
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "proportional",
-                "value": 1.0
-              },
-              "height-constraints": {
-                "sizing-mode": "proportional",
-                "value": 1.0
-              }
-            },
-            "image-content": "$topBarImg",
-            "scale": "cover"
           }
         ]
       }
     }
   },
   "parameters": {
-    "topBarText": {
-      "data-type": "text",
-      "required": false,
-      "description": ""
-    },
     "topBarImg": {
       "data-type": "image",
       "required": false,
@@ -104,18 +94,23 @@
       "data-type": "void-callback",
       "required": false,
       "description": ""
+    },
+    "topBarText": {
+      "data-type": "text",
+      "required": false,
+      "description": ""
     }
   },
   "previews": [
     {
-      "design": "My Vehicles Top Bar",
+      "design": "My Vehicles TopNavBar",
       "size": {
         "width": 244.0,
         "height": 29.0
       },
       "parameters": {
-        "topBarText": "My Vehicles",
-        "topBarImg": "settings.png"
+        "topBarImg": "settings.png",
+        "topBarText": "My Vehicles"
       }
     }
   ],

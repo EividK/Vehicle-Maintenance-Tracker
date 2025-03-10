@@ -21,4 +21,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "VehicleHealth"
 include(":app")
+
+// Include the React Native project
+include(":reactnative")
+project(":reactnative").projectDir = file("../VehicleHealthNativeApp/android/app")
  

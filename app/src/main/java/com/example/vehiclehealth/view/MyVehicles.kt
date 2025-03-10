@@ -7,11 +7,14 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -40,7 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.vehiclehealth.R
 import com.example.vehiclehealth.models.Vehicle
-import com.example.vehiclehealth.myvehiclestopbar.MyVehiclesTopBar
+import com.example.vehiclehealth.myvehiclestopnavbar.MyVehiclesTopNavBar
 import com.example.vehiclehealth.novehicleadded.NoVehicleAdded
 import com.example.vehiclehealth.services.VehicleService
 import com.example.vehiclehealth.services.VinDecoderService
@@ -110,36 +113,40 @@ fun MyVehiclesScreen(navController: NavController, vehicleService: VehicleServic
         }
     }
 
-    Column (modifier = Modifier.fillMaxSize()) {
-    MyVehiclesTopBar(
-        topBarImg = painterResource(id = R.drawable.my_vehicles_top_bar_settings),
-        topBarText = "My Vehicles",
-                modifier = Modifier.fillMaxWidth()
-    )
-    }
+    Column ( modifier = Modifier
+        .fillMaxSize()) {
+        MyVehiclesTopNavBar(
+            topBarImg = painterResource(id = R.drawable.my_vehicles_top_nav_bar_settings),
+            topBarText = "My Vehicles",
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color(0xFF1E1D2B))
+                .padding(top = 50.dp, bottom = 30.dp, start = 25.dp)
+                .height(29.dp)
+        )
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize() // Ensures it takes up the full screen
-            .background(Color(0xFF1E1D2B)), // Screen background color
-    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize() // This Box now occupies the remaining space
+                .background(Color(0xFF1E1D2B))
+        ) {
+            // Main dashboard displaying user's vehicles
+            if (vehicles.value.isEmpty()) {
+                NoVehicleAdded(
+                    noVehicleText = "You have no vehicles added",
+                    noVehicleDescText = "Get started by adding a vehicle to begin \ntracking its performance and maintenance.",
+                    noVehicleImg = painterResource(id = R.drawable.no_vehicle_added_car_picture),
+                    modifier = Modifier.wrapContentSize()
+                )
+            } else {
+                VehicleList(vehicles.value)
+            }
 
-        // Main dashboard displaying users Vehicles (if any added).
-        if (vehicles.value.isEmpty()) {
-            NoVehicleAdded(
-                noVehicleText = "You have no vehicles added",
-                noVehicleDescText = "Get started by adding a vehicle to begin \ntracking its performance and maintenance.",
-                noVehicleImg = painterResource(id = R.drawable.no_vehicle_added_car_picture),
-                modifier = Modifier.wrapContentSize()
-            )
-        } else {
-            VehicleList(vehicles.value)
+            // Bottom Nav bar
+            MainNavigationBar(navController = navController, onVinClick = {
+                showVehicleDialog = true
+            })
         }
-
-        // Bottom Nav bar
-        MainNavigationBar(navController = navController, onVinClick = {
-            showVehicleDialog = true
-        })
     }
 
     if (showVehicleDialog) {
