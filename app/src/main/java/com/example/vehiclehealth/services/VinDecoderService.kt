@@ -2,7 +2,7 @@ package com.example.vehiclehealth.services
 
 /**
  *
- * VIN (Vehicle Identification Number) Decoder
+ * Handles the VIN Decoding using Firebase
  *
  */
 
@@ -17,16 +17,15 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.firestore.FirebaseFirestore
 
-// Intermediate data class for local decoding
+// data class for local decoding
 private data class DecodedVinData(
     val vin: String,
     val brand: String,
     val year: Int,
     val modelCode: String,
-    val model: String = "Unknown" // default if mapping lookup fails
+    val model: String = "Unknown"
 )
 
-// New data class to hold extended model mapping information.
 private data class ModelMappingData(
     val modelName: String,
     val engineType: String?,
@@ -51,16 +50,13 @@ class VinDecoderService : Service() {
     }
 
     /**
-     * Decodes the VIN by:
-     * 1. Extracting WMI, year code, and model code.
-     * 2. Querying Firestore to get the brand (from wmiMapping) and year (from vinMapping).
-     * 3. Looking up the extended model information in the modelMapping collection.
-     * 4. Broadcasting the complete Vehicle object.
+     * Extract WMI, year code, and model code
+     * Query Firestore to get vehicle details like, year, brand, model
      */
     private fun decodeVinUsingDatabase(vin: String) {
         // Validate the VIN first.
         if (!isValidVin(vin)) {
-            Log.e("VinDecoderService", "Invalid VIN: check digit does not match")
+            Log.e("VinDecoderService", "Invalid VIN: Check Digit Does Not Match.")
             val errorVehicle = Vehicle(
                 vin = vin,
                 brand = "Invalid VIN",
@@ -82,11 +78,8 @@ class VinDecoderService : Service() {
         val yearCode = vin[9]
         val modelCode = vin.substring(3, 8)
 
-        // Retrieve brand from wmiMapping.
         getBrandForWMI(wmi, onSuccess = { brand ->
-            // Retrieve year from yearMapping.
             getYearForCode(yearCode, onSuccess = { year ->
-                // Lookup the model mapping using brand and modelCode.
                 lookupModelMapping(brand, modelCode, onSuccess = { mappingData ->
                     val finalModel = mappingData?.modelName ?: "Unknown"
                     val vehicleResult = Vehicle(
@@ -105,7 +98,6 @@ class VinDecoderService : Service() {
                     broadcastDecodedData(vehicleResult)
                     stopSelf()
                 }, onFailure = {
-                    // Fallback if no mapping found.
                     val vehicleResult = Vehicle(
                         //id = "",
                         vin = vin,
@@ -132,9 +124,6 @@ class VinDecoderService : Service() {
         })
     }
 
-    /**
-     * Retrieves the brand for the given WMI from the "wmiMapping" collection.
-     */
     private fun getBrandForWMI(wmi: String, onSuccess: (String) -> Unit, onFailure: () -> Unit) {
         firestore.collection("wmiMapping").document(wmi)
             .get()
@@ -153,9 +142,6 @@ class VinDecoderService : Service() {
             .addOnFailureListener { onFailure() }
     }
 
-    /**
-     * Retrieves the model year for the given year code from the "vinMapping/yearMapping" document.
-     */
     private fun getYearForCode(yearCode: Char, onSuccess: (Int) -> Unit, onFailure: () -> Unit) {
         firestore.collection("vinMapping").document("yearMapping")
             .get()
@@ -176,10 +162,6 @@ class VinDecoderService : Service() {
             .addOnFailureListener { onFailure() }
     }
 
-    /**
-     * Looks up the modelMapping collection for a document matching the given brand and modelCode.
-     * Returns the extended mapping information (modelName, engineType, bodyStyle, trimLevel, transmissionType).
-     */
     private fun lookupModelMapping(
         brand: String,
         modelCode: String,
@@ -213,7 +195,7 @@ class VinDecoderService : Service() {
                         )
                     )
                 } else {
-                    Log.d("VinDecoderService", "lookupModelMapping: No document found for brand=$normalizedBrand, modelCode=$normalizedModelCode")
+                    Log.d("VinDecoderService", "lookupModelMapping: No document found for brand $normalizedBrand, modelCode $normalizedModelCode")
                     onSuccess(null)
                 }
             }
@@ -223,16 +205,12 @@ class VinDecoderService : Service() {
             }
     }
 
-    /**
-     * Broadcasts the decoded vehicle details so that the UI can update.
-     */
     private fun broadcastDecodedData(vehicle: Vehicle) {
         val broadcastIntent = Intent("com.example.vehiclehealth.ACTION_VIN_DECODED").apply {
             putExtra("vin", vehicle.vin)
             putExtra("brand", vehicle.brand)
             putExtra("model", vehicle.model)
             putExtra("year", vehicle.year)
-            // Optionally broadcast extra fields if needed.
             putExtra("engineType", vehicle.engineType)
             putExtra("bodyStyle", vehicle.bodyStyle)
             putExtra("trimLevel", vehicle.trimLevel)

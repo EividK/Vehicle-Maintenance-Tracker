@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "684617172757",
+    "project_id": "vehiclehealth-38472",
+    "storage_bucket": "vehiclehealth-38472.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:684617172757:android:cf56abd802e318789dcb1c",
+        "android_client_info": {
+          "package_name": "com.example.vehiclehealth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "684617172757-2b6osqe0nk8c0kgutujie9ogqun1jf33.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.vehiclehealth",
+            "certificate_hash": "8a48b73a1d72ad012940ec2b399e5ded4266df36"
+          }
+        },
+        {
+          "client_id": "684617172757-fr9kl7m28khopd7i8qr1n2v1iqi4h7u1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiGvGX81ZJUPG_HOXHrW9JnX_xaEhwIK0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "684617172757-fr9kl7m28khopd7i8qr1n2v1iqi4h7u1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

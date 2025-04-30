@@ -9,6 +9,8 @@ pluginManagement {
         }
         mavenCentral()
         gradlePluginPortal()
+        //maven { url = uri("https://jitpack.io") }
+        //maven { url = file("../VehicleHealthNativeApp/node_modules/react-native/android").toURI() }
     }
 }
 dependencyResolutionManagement {
@@ -16,13 +18,15 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        //maven { url = uri("https://jitpack.io") }
+        //maven { url = file("../VehicleHealthNativeApp/node_modules/react-native/android").toURI() }
     }
 }
 
 rootProject.name = "VehicleHealth"
 include(":app")
+//include(":reactnative")
 
-// Include the React Native project
-include(":reactnative")
-project(":reactnative").projectDir = file("../VehicleHealthNativeApp/android/app")
+// Link to the React Native project's directory
+//project(":reactnative").projectDir = file("../../VehicleHealthNativeApp/android")
  
